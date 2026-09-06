@@ -1,0 +1,13 @@
+torch
+torchvision
+transformers
+streamlit
+numpy
+pandas
+opencv-python
+rasterio
+pillow
+scikit-learn
+matplotlib
+huggingface_hub
+sentencepiece
