@@ -30,6 +30,9 @@ def train():
     train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate_fn)
     val_loader = DataLoader(val_ds, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_fn)
 
+    print(f"Train batches per epoch: {len(train_loader)}")
+    print(f"Val batches: {len(val_loader)}")
+
     model = ChangeModel(vocab_size=vocab_size).to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=LR)
     criterion = nn.CrossEntropyLoss()
@@ -37,7 +40,7 @@ def train():
     for epoch in range(EPOCHS):
         model.train()
         total_loss = 0
-        for img1, img2, questions, answers in train_loader:
+        for batch_idx, (img1, img2, questions, answers) in enumerate(train_loader):
             img1, img2, answers = img1.to(device), img2.to(device), answers.to(device)
             optimizer.zero_grad()
             outputs = model(img1, img2, questions, device)
@@ -45,6 +48,9 @@ def train():
             loss.backward()
             optimizer.step()
             total_loss += loss.item()
+
+            if batch_idx % 50 == 0:
+                print(f"  Epoch {epoch+1} | Batch {batch_idx}/{len(train_loader)} | Loss: {loss.item():.4f}")
 
         avg_loss = total_loss / len(train_loader)
 
