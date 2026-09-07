@@ -69,6 +69,7 @@ def train():
 
     torch.save(model.state_dict(), "models/change_baseline.pth")
     print("Model saved to models/change_baseline.pth")
-
+import os
+os.makedirs("models", exist_ok=True)
 if __name__ == "__main__":
     train()
