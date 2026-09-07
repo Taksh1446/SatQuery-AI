@@ -4,7 +4,7 @@ from torch.utils.data import DataLoader, random_split
 from dataset import ChangeDataset
 from model import ChangeModel
 
-DATA_DIR = "data/cdvqa/eval"
+JSON_PATH = "data/cdvqa/eval/eval/CDVQA.json"
 BATCH_SIZE = 32
 EPOCHS = 5
 LR = 1e-4
@@ -20,7 +20,7 @@ def train():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("Using device:", device)
 
-    full_ds = ChangeDataset(f"{DATA_DIR}/CDVQA.json")
+    full_ds = ChangeDataset(JSON_PATH)
     vocab_size = len(full_ds.answer_to_idx)
 
     val_size = int(0.1 * len(full_ds))

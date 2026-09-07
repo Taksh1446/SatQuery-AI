@@ -5,8 +5,8 @@ import torch
 from torch.utils.data import Dataset
 from torchvision import transforms
 
-DATA_DIR = "data/cdvqa/eval"
-IMAGE_DIR = f"{DATA_DIR}/External_images/CDVQA"
+JSON_PATH = "data/cdvqa/eval/eval/CDVQA.json"
+IMAGE_DIR = "data/cdvqa/eval/External_images/CDVQA"
 
 class ChangeDataset(Dataset):
     def __init__(self, json_path):
@@ -53,7 +53,7 @@ class ChangeDataset(Dataset):
         return img1, img2, item["question"], answer_idx
 
 if __name__ == "__main__":
-    ds = ChangeDataset(f"{DATA_DIR}/CDVQA.json")
+    ds = ChangeDataset(JSON_PATH)
     print("Dataset size:", len(ds))
     print("Vocabulary size:", len(ds.answer_to_idx))
     print("Sample answers:", list(ds.answer_to_idx.items())[:10])
